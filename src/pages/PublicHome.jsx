@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { 
   GraduationCap, 
@@ -170,27 +170,6 @@ const LeadershipCarousel = () => {
 };
 
 const PublicHome = () => {
-  const location = useLocation();
-
-  // Handle hash navigation on page load
-  useEffect(() => {
-    const hash = location.hash.replace('#', '');
-    if (hash) {
-      setTimeout(() => {
-        const element = document.getElementById(hash);
-        if (element) {
-          const offset = 80; // Account for navbar height
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      }, 100);
-    }
-  }, [location.hash]);
 
   const features = [
     {
@@ -226,14 +205,14 @@ const PublicHome = () => {
   ];
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden">
+    <div className="min-h-screen">
       <PublicNavbar />
-      <section id="home">
+      <div id="carousel">
         <HeroCarousel />
-      </section>
+      </div>
 
       {/* ================= NEW ABOUT SECTION ================= */}
-      <section id="about" className="py-20 px-4 bg-gradient-to-br from-white via-blue-50/50 to-purple-50/50">
+      <section className="py-20 px-4 bg-gradient-to-br from-white via-blue-50/50 to-purple-50/50">
         <div className="max-w-7xl mx-auto space-y-20">
 
           {/* Header */}
@@ -298,7 +277,7 @@ const PublicHome = () => {
               transition={{ duration: 0.6 }}
               className="space-y-4 order-2 md:order-1"
             >
-              <h3 className="text-2xl font-bold gradient-text">Autonomous</h3>
+              <h3 className="text-2xl font-bold gradient-text">Autonomous Advantage</h3>
               <p className="text-gray-700 text-lg leading-relaxed">
                 With Autonomous status, our curriculum evolves with industry standards, ensuring
                 practical exposure, hands-on learning, and strong career readiness.
@@ -366,7 +345,7 @@ const PublicHome = () => {
       {/* ================= END ABOUT ================= */}
 
       {/* Leadership Carousel Section */}
-      <section id="leadership" className="py-20 px-4 bg-gradient-to-br from-blue-50 via-purple-50/30 to-pink-50/30 relative overflow-hidden">
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 via-purple-50/30 to-pink-50/30 relative overflow-hidden">
         {/* Background Decorative Elements */}
         <div className="absolute top-0 left-0 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
@@ -458,9 +437,7 @@ const PublicHome = () => {
       </section>
 
       {/* Alumni Success Stories Section */}
-      <div id="alumni">
-        <AlumniSuccessStories />
-      </div>
+      <AlumniSuccessStories />
     </div>
   );
 };

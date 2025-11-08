@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { 
   GraduationCap, 
   Users, 
@@ -16,7 +16,7 @@ import {
 const DepartmentsSection = () => {
   const [selectedDept, setSelectedDept] = useState(null);
   const [activeTab, setActiveTab] = useState('profile');
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const scrollPositionRef = useRef(0);
 
   const departments = [
     {
@@ -507,42 +507,25 @@ The Department of Basic Sciences is exceptionally well-staffed with highly quali
   };
 
   const handleDeptClick = (dept) => {
-    // Save current scroll position
-    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-    setScrollPosition(currentScroll);
-    
-    // Prevent body scroll when modal opens
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${currentScroll}px`;
-    document.body.style.width = '100%';
-    
+    // Save current scroll position before opening detail view
+    scrollPositionRef.current = window.scrollY;
     setSelectedDept(dept);
     setActiveTab('profile');
   };
 
   const closeDeptView = () => {
     setSelectedDept(null);
+    // Restore scroll position after closing detail view
+    setTimeout(() => {
+      const departmentsSection = document.getElementById('departments');
+      if (departmentsSection) {
+        departmentsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        // Fallback to saved scroll position
+        window.scrollTo(0, scrollPositionRef.current);
+      }
+    }, 100);
   };
-
-  // Cleanup effect to restore scroll position when modal closes
-  useEffect(() => {
-    if (!selectedDept) {
-      // Restore body scroll
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      
-      // Restore scroll position after a small delay to ensure DOM is updated
-      setTimeout(() => {
-        window.scrollTo({
-          top: scrollPosition,
-          behavior: 'instant'
-        });
-      }, 10);
-    }
-  }, [selectedDept, scrollPosition]);
 
   if (selectedDept) {
     const deptData = departmentData[selectedDept.id] || departmentData.cse;

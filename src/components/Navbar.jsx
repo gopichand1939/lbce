@@ -17,14 +17,14 @@ const Navbar = ({ onMenuToggle, isSidebarOpen }) => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 glass border-b border-gray-200/50 shadow-lg bg-white/95 backdrop-blur-md">
-      <div className="w-full">
-        <div className="flex items-center justify-between h-20 md:h-24 lg:h-28 px-0">
+    <nav className="sticky top-0 z-50 glass border-b border-gray-200/50 shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20 md:h-24 lg:h-28">
           {/* Left Section: Logo & Menu Toggle */}
           <div className="flex items-center space-x-2 md:space-x-4">
             <button
               onClick={onMenuToggle}
-              className="p-2 rounded-lg hover:bg-gray-100/50 transition-colors lg:hidden ml-2"
+              className="p-2 rounded-lg hover:bg-gray-100/50 transition-colors lg:hidden"
               aria-label="Toggle menu"
             >
               {isSidebarOpen ? (
@@ -34,11 +34,11 @@ const Navbar = ({ onMenuToggle, isSidebarOpen }) => {
               )}
             </button>
             
-            <Link to="/dashboard" className="flex items-center flex-shrink-0 pl-0 m-0">
+            <Link to="/dashboard" className="flex items-center">
               <img
                 src="https://lbce.edu.in/static/images/jrlogo.png"
                 alt="College Logo"
-                className="h-16 w-auto md:h-20 lg:h-24 object-contain cursor-pointer hover:opacity-80 transition-opacity"
+                className="h-20 w-auto md:h-20 lg:h-24 xl:h-28 object-contain max-w-[350px] md:max-w-[400px] lg:max-w-[500px] xl:max-w-[600px] cursor-pointer hover:opacity-80 transition-opacity"
                 onError={(e) => {
                   e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ctext y=".9em" font-size="90"%3E🎓%3C/text%3E%3C/svg%3E';
                 }}
@@ -47,35 +47,31 @@ const Navbar = ({ onMenuToggle, isSidebarOpen }) => {
           </div>
 
           {/* Center Section: Search Bar */}
-          <div className="hidden md:flex flex-1 max-w-xl mx-8 justify-center">
+          <div className="hidden md:flex flex-1 max-w-xl mx-8">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search modules, students, faculty..."
-                className="w-full pl-10 pr-4 py-2 rounded-lg glass border border-gray-200/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all bg-white/50 backdrop-blur-sm"
+                className="w-full pl-10 pr-4 py-2 rounded-lg glass border border-gray-200/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
               />
             </div>
           </div>
 
           {/* Right Section: Notifications & User Menu */}
-          <div className="flex items-center space-x-2 pr-4">
+          <div className="flex items-center space-x-2">
             {/* Mobile Search */}
             <button className="p-2 rounded-lg hover:bg-gray-100/50 transition-colors md:hidden">
               <Search className="w-5 h-5 text-gray-700" />
             </button>
 
             {/* Notifications */}
-            <motion.div 
-              className="relative"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <div className="relative">
               <button
                 onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-                className="relative p-2 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 group"
+                className="relative p-2 rounded-lg hover:bg-gray-100/50 transition-colors hover-glow"
               >
-                <Bell className="w-5 h-5 text-gray-700 group-hover:text-blue-600 transition-colors duration-300" />
+                <Bell className="w-5 h-5 text-gray-700" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
 
@@ -103,27 +99,18 @@ const Navbar = ({ onMenuToggle, isSidebarOpen }) => {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
 
             {/* User Menu */}
-            <motion.div 
-              className="relative"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <div className="relative">
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 group"
+                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100/50 transition-colors hover-glow"
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center shadow-lg">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
                   <User className="w-5 h-5 text-white" />
                 </div>
-                <motion.div
-                  animate={{ rotate: isUserMenuOpen ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ChevronDown className="w-4 h-4 text-gray-700 hidden sm:block group-hover:text-blue-600 transition-colors duration-300" />
-                </motion.div>
+                <ChevronDown className="w-4 h-4 text-gray-700 hidden sm:block" />
               </button>
 
               <AnimatePresence>
@@ -139,33 +126,26 @@ const Navbar = ({ onMenuToggle, isSidebarOpen }) => {
                       <p className="text-xs text-gray-500">{user?.role || 'Admin'} - College AMS</p>
                     </div>
                     <div className="py-2">
-                      <motion.button 
-                        whileHover={{ x: 4 }}
-                        className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200 group/item"
-                      >
-                        <User className="w-4 h-4 group-hover/item:text-blue-600 transition-colors" />
+                      <button className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50/50 transition-colors">
+                        <User className="w-4 h-4" />
                         <span>Profile</span>
-                      </motion.button>
-                      <motion.button 
-                        whileHover={{ x: 4 }}
-                        className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200 group/item"
-                      >
-                        <Settings className="w-4 h-4 group-hover/item:text-blue-600 transition-colors" />
+                      </button>
+                      <button className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50/50 transition-colors">
+                        <Settings className="w-4 h-4" />
                         <span>Settings</span>
-                      </motion.button>
-                      <motion.button 
+                      </button>
+                      <button 
                         onClick={handleLogout}
-                        whileHover={{ x: 4 }}
-                        className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50/50 transition-all duration-200 group/item"
+                        className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50/50 transition-colors"
                       >
-                        <LogOut className="w-4 h-4 group-hover/item:text-red-700 transition-colors" />
+                        <LogOut className="w-4 h-4" />
                         <span>Logout</span>
-                      </motion.button>
+                      </button>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
