@@ -9,11 +9,14 @@ import {
   Bell,
   FileText,
   ClipboardCheck,
-  ChevronDown
+  ChevronDown,
+  Menu,
+  X
 } from 'lucide-react';
 
 const PublicNavbar = () => {
   const [isServiceOpen, setIsServiceOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const location = useLocation();
 
@@ -112,21 +115,21 @@ const PublicNavbar = () => {
   const isHomePage = location.pathname === '/';
   
   return (
-    <nav className="sticky top-0 z-50 glass border-b border-gray-200/50 shadow-lg bg-white/95 backdrop-blur-md">
-      <div className="w-full">
-        <div className="flex items-center justify-between h-20 md:h-24 lg:h-28 px-0">
+    <nav className="sticky top-0 z-50 glass border-b border-gray-200/50 shadow-lg bg-white/95 backdrop-blur-md w-full overflow-x-hidden">
+      <div className="w-full max-w-full">
+        <div className="flex items-center justify-between h-16 md:h-20 lg:h-24 px-2 sm:px-4 md:px-6 lg:px-8 w-full">
 
           {/* ✅ LOGO TOUCHES LEFT WITH ZERO GAP */}
-          <Link to="/" className="flex items-center flex-shrink-0 pl-0 m-0">
+          <Link to="/" className="flex items-center flex-shrink-0">
             <img
               src="https://lbce.edu.in/static/images/jrlogo.png"
               alt="College Logo"
-              className="h-16 w-auto md:h-20 lg:h-24 object-contain"
+              className="h-12 w-auto sm:h-14 md:h-16 lg:h-20 object-contain"
             />
           </Link>
 
-          {/* MENU CENTER */}
-          <div className="hidden lg:flex items-center space-x-2">
+          {/* MENU CENTER - DESKTOP */}
+          <div className="hidden lg:flex items-center justify-center flex-1 space-x-1 xl:space-x-2">
             {menuItems.map((item, index) => {
               const Icon = item.icon;
               // Show active based on activeSection state
@@ -288,16 +291,16 @@ const PublicNavbar = () => {
             </motion.div>
           </div>
 
-          {/* LOGIN */}
+          {/* LOGIN - DESKTOP */}
           <motion.div
-            className="pr-4"
+            className="hidden lg:flex items-center flex-shrink-0"
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3, delay: 0.4 }}
           >
             <Link
               to="/login"
-              className="relative group flex items-center text-gray-700 hover:text-blue-600 font-medium text-sm transition-all duration-300"
+              className="relative group flex items-center text-gray-700 hover:text-blue-600 font-medium text-sm transition-all duration-300 px-2"
             >
               {/* Hover Underline Effect */}
               <motion.div
@@ -311,7 +314,144 @@ const PublicNavbar = () => {
             </Link>
           </motion.div>
 
+          {/* MOBILE MENU BUTTON - VISIBLE ON ALL MOBILE DEVICES */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden flex items-center justify-center p-2 rounded-lg hover:bg-gray-100/50 transition-colors flex-shrink-0 z-50"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6 text-gray-700" />
+            ) : (
+              <Menu className="w-6 h-6 text-gray-700" />
+            )}
+          </button>
+
         </div>
+
+        {/* MOBILE MENU - VISIBLE ON ALL MOBILE DEVICES */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="lg:hidden border-t border-gray-200/50 bg-white/98 backdrop-blur-md overflow-hidden z-40 w-full"
+            >
+              <div className="px-4 py-4 space-y-2 w-full">
+                {/* Mobile Menu Items - ALL VISIBLE */}
+                {menuItems.map((item, index) => {
+                  const Icon = item.icon;
+                  const isActive = isHomePage && activeSection === item.section;
+                  return (
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.2, delay: index * 0.1 }}
+                      className="w-full"
+                    >
+                      <Link
+                        to={item.path}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToSection(item.section);
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 w-full ${
+                          isActive
+                            ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600 font-semibold'
+                            : 'text-gray-700 hover:bg-gray-50'
+                        }`}
+                      >
+                        <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-blue-600' : 'text-gray-600'}`} />
+                        <span className="text-base font-medium">{item.label}</span>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+
+                {/* Mobile Service Dropdown */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2, delay: 0.3 }}
+                >
+                  <button
+                    onClick={() => setIsServiceOpen(!isServiceOpen)}
+                    className="w-full flex items-center justify-between px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-200"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Settings className="w-5 h-5 text-gray-600 flex-shrink-0" />
+                      <span className="text-base font-medium">Service</span>
+                    </div>
+                    <ChevronDown
+                      className={`w-4 h-4 text-gray-600 transition-transform duration-200 flex-shrink-0 ${
+                        isServiceOpen ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+
+                  {/* Mobile Service Submenu */}
+                  <AnimatePresence>
+                    {isServiceOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="pl-8 mt-2 space-y-1 overflow-hidden"
+                      >
+                        {serviceItems.map((item, index) => {
+                          const Icon = item.icon;
+                          const isActive = location.pathname === item.path;
+                          return (
+                            <motion.div
+                              key={item.label}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.15, delay: index * 0.05 }}
+                            >
+                              <Link
+                                to={item.path}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 w-full ${
+                                  isActive
+                                    ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600 font-semibold'
+                                    : 'text-gray-600 hover:bg-gray-50'
+                                }`}
+                              >
+                                <Icon className="w-4 h-4 flex-shrink-0" />
+                                <span className="text-sm font-medium">{item.label}</span>
+                              </Link>
+                            </motion.div>
+                          );
+                        })}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+
+                {/* Mobile Login */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2, delay: 0.4 }}
+                  className="pt-2 border-t border-gray-200/50"
+                >
+                  <Link
+                    to="/login"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-center px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-200 font-medium"
+                  >
+                    Login
+                  </Link>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );

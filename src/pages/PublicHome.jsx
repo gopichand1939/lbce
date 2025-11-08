@@ -226,7 +226,7 @@ const PublicHome = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen w-full overflow-x-hidden">
       <PublicNavbar />
       <section id="home">
         <HeroCarousel />
@@ -298,7 +298,7 @@ const PublicHome = () => {
               transition={{ duration: 0.6 }}
               className="space-y-4 order-2 md:order-1"
             >
-              <h3 className="text-2xl font-bold gradient-text">Autonomous Advantage</h3>
+              <h3 className="text-2xl font-bold gradient-text">Autonomous</h3>
               <p className="text-gray-700 text-lg leading-relaxed">
                 With Autonomous status, our curriculum evolves with industry standards, ensuring
                 practical exposure, hands-on learning, and strong career readiness.
