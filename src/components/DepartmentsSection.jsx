@@ -25,12 +25,6 @@ const DepartmentsSection = () => {
       icon: GraduationCap,
     },
     {
-      id: 'civil',
-      name: 'CIVIL ENGINEERING',
-      shortName: 'CE',
-      icon: Building2,
-    },
-    {
       id: 'ece',
       name: 'ELECTRONICS & COMMUNICATION ENGINEERING',
       shortName: 'ECE',
@@ -41,6 +35,12 @@ const DepartmentsSection = () => {
       name: 'ELECTRICAL & ELECTRONIC ENGINEERING',
       shortName: 'EEE',
       icon: FlaskConical,
+    },
+    {
+      id: 'civil',
+      name: 'CIVIL ENGINEERING',
+      shortName: 'CE',
+      icon: Building2,
     },
     {
       id: 'bsh',

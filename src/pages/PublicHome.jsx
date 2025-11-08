@@ -14,6 +14,8 @@ import {
 import PublicNavbar from '../components/PublicNavbar';
 import HeroCarousel from '../components/HeroCarousel';
 import DepartmentsSection from '../components/DepartmentsSection';
+import SkillDevelopmentCenter from '../components/SkillDevelopment';
+import AlumniSuccessStories from '../components/AlumniSuccessStories';
 
 // Leadership Carousel Component
 const LeadershipCarousel = () => {
@@ -372,6 +374,9 @@ const PublicHome = () => {
       {/* Departments Section */}
       <DepartmentsSection />
 
+      {/* Skill Development Center Section */}
+      <SkillDevelopmentCenter />
+
       {/* Features Grid */}
       <section className="py-20 px-4 bg-gradient-to-b from-white to-blue-50">
         <div className="max-w-7xl mx-auto">
@@ -424,6 +429,9 @@ const PublicHome = () => {
 
         </div>
       </section>
+
+      {/* Alumni Success Stories Section */}
+      <AlumniSuccessStories />
     </div>
   );
 };
