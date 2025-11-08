@@ -6,6 +6,9 @@ import Placeholder from './pages/Placeholder';
 import Login from './pages/Login';
 import PublicHome from './pages/PublicHome';
 import ProtectedRoute from './components/ProtectedRoute';
+import NotificationsPage from './pages/Services/Notifications/NotificationsPage';
+import ExaminationsPage from './pages/Services/Examinations/ExaminationsPage';
+import ResultsPage from './pages/Services/Results/ResultsPage';
 
 function AppRoutes() {
   return (
@@ -13,6 +16,11 @@ function AppRoutes() {
       {/* Public Routes */}
       <Route path="/" element={<PublicHome />} />
       <Route path="/login" element={<Login />} />
+      
+      {/* Services Routes */}
+      <Route path="/services/notifications" element={<NotificationsPage />} />
+      <Route path="/services/examinations" element={<ExaminationsPage />} />
+      <Route path="/services/results" element={<ResultsPage />} />
       
       {/* Protected Routes - Only accessible after login */}
       <Route

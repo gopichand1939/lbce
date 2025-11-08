@@ -5,10 +5,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 const HeroCarousel = () => {
   const images = [
     { url: 'https://i.postimg.cc/HWz0xm8N/e621e54c-fdfe-413d-b751-bd0262152787.png', alt: 'College Welcome' },
-    { url: 'https://bullayyacollege.org/media/jrcollege/slides/3.png', alt: 'College Campus' },
-    { url: 'https://bullayyacollege.org/media/jrcollege/slides/4.png', alt: 'College Event' },
-    { url: 'https://bullayyacollege.org/media/jrcollege/slides/5_l6JEF02.png', alt: 'College Activities' },
-    { url: 'https://bullayyacollege.org/media/jrcollege/slides/7_pmaNZFZ.png', alt: 'College Programs' }
+    { url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTBm6wzPZj4hbOzHxLkKcRbTj9p82bfhmYIQ&s', alt: 'College Campus' },
+    { url: 'https://bullayyacollege.org/media/jrcollege/slides/3.png', alt: 'College Event' },
+    { url: 'https://bullayyacollege.org/media/jrcollege/slides/4.png', alt: 'College Activities' },
+    { url: 'https://bullayyacollege.org/media/jrcollege/slides/5_l6JEF02.png', alt: 'College Programs' },
+    { url: 'https://bullayyacollege.org/media/jrcollege/slides/7_pmaNZFZ.png', alt: 'College Excellence' }
   ]
 
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -22,7 +23,7 @@ const HeroCarousel = () => {
         setDirection(1)
         setCurrentIndex(prev => (prev + 1) % images.length)
       }
-    }, 10000)
+    }, 5000)
     return () => clearInterval(interval)
   }, [images.length])
 
